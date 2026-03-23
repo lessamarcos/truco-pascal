@@ -21,7 +21,7 @@ type
         cartas: array[1..TAM_BARALHO] of Tcarta;
         inicio: integer;
         fim: integer;
-        qtd: integer;
+        quantidade: integer;
     end;
 
     Tlista = record
