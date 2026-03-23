@@ -1,0 +1,38 @@
+classDiagram
+    class Baralho {
+        cartas [array]
+        embaralhar()
+        cortar()
+        distribuir()
+        virarManilha()
+    }
+    class AcoesPadrao {
+        jogar()
+        trucar()
+        correr(extra)
+        empachar(extra)
+    }
+    class Placar {
+        listaJogadores()
+        inserePonto()
+    }
+    class Mao {
+        cartas [array 3]
+    }
+    class Jogadores {
+        player()
+        cpu()
+    }
+    class Carta {
+        valor()
+        naipe(
+              ouro    = 1
+              copas   = 2
+              espadas = 3
+              paus    = 4)
+    }
+    Baralho --> Carta
+    Mao --> Carta
+    Jogadores --> AcoesPadrao
+    Jogadores --> Mao
+    Placar --> Jogadores
