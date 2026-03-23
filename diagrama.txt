@@ -1,13 +1,13 @@
 classDiagram
     class Baralho {
         cartas [array]
-        embaralhar()
-        cortar()
-        distribuir()
-        virarManilha()
+        embaralhar( randonicamente preencher o valor )
+        cortar( usario informa a posição do corte )
+        distribuir( usuario ganha posições par do vetor )
+        virarManilha( escolhe uma carta que não está nas mãos (CPU/PLAYER))
     }
     class AcoesPadrao {
-        jogar()
+        jogar(  )
         trucar()
         correr(extra)
         empachar(extra)
@@ -24,12 +24,13 @@ classDiagram
         cpu()
     }
     class Carta {
-        valor()
+        valor(1 até 7 e 10 até 12)
         naipe(
               ouro    = 1
-              copas   = 2
-              espadas = 3
-              paus    = 4)
+              espadas = 2
+              copas   = 3
+              paus    = 4
+            )
     }
     Baralho --> Carta
     Mao --> Carta
