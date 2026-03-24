@@ -1,0 +1,39 @@
+classDiagram
+    class Baralho {
+        cartas [array]
+        embaralhar( randonicamente preencher o valor )
+        cortar( usario informa a posição do corte )
+        distribuir( usuario ganha posições par do vetor )
+        virarManilha( escolhe uma carta que não está nas mãos (CPU/PLAYER))
+    }
+    class AcoesPadrao {
+        jogar(  )
+        trucar()
+        correr(extra)
+        empachar(extra)
+    }
+    class Placar {
+        listaJogadores()
+        inserePonto()
+    }
+    class Mao {
+        cartas [array 3]
+    }
+    class Jogadores {
+        player()
+        cpu()
+    }
+    class Carta {
+        valor(1 até 7 e 10 até 12)
+        naipe(
+              ouro    = 1
+              espadas = 2
+              copas   = 3
+              paus    = 4
+            )
+    }
+    Baralho --> Carta
+    Mao --> Carta
+    Jogadores --> AcoesPadrao
+    Jogadores --> Mao
+    Placar --> Jogadores
