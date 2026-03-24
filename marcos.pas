@@ -1,7 +1,19 @@
-program marcos;
+program truco;
+
+const
+    TAM_BARALHO = 40;
+    TAM_MAO = 3;
+    MAX_PONTOS = 12;
+
 type
-    Tpilha = record
-        cartas: array[1..40] of integer;
+    Tcarta = record
+        valor: integer;
+        naipe: integer;
+        forca: integer;
+    end;
+
+    Tbaralho = record
+        cartas: array[1.. TAM_BARALHO] of Tcarta;
         topo: integer;
     end;
 
@@ -17,6 +29,12 @@ begin
         l[j]:= temp;
     end;
 end;
+
+
+procedure cortar(var l: Tlista);
+
+function virarManilha(l: Tlista)
+
 
 procedure ListaParaPilha(l: Tlista; var p: tpilha);
 var i: integer;
