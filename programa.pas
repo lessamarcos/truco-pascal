@@ -7,8 +7,13 @@ const
 
 type
     Tcarta = record
+<<<<<<< HEAD
         valor: string;
         naipe: string;
+=======
+        valor: integer;
+        naipe: integer;
+>>>>>>> 768dc2d3181ef1cc222a04987239202d2e1815a9
         forca: integer;
     end;
 
