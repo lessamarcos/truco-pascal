@@ -44,6 +44,19 @@ begin
                 cartas:= cartas + 1;
             end;
         end;
+
+        case valor of
+            4: l[cartas].forca:= 1;
+            5: l[cartas].forca:= 2;
+            6: l[cartas].forca:= 3;
+            7: l[cartas].forca:= 4;
+            10: l[cartas].forca:= 5;
+            11: l[cartas].forca:= 6;
+            12: l[cartas].forca:= 7;
+            1: l[cartas].forca:= 8;
+            2: l[cartas].forca:= 9;
+            3:= l[cartas].forca:= 10;
+        end;
 end;
 
 // a lógica para embaralhar foi feita através do algoritmo fisher-yates, que pra mim é o padrão ouro, ele garante que todas as permutações
