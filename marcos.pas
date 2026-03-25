@@ -17,11 +17,19 @@ type
         topo: integer;
     end;
 
+    Tlista = array[1..TAM_BARALHO] of Tcarta;
+
+    Tfila = record
+        inicio: integer;
+        fim: integer;
+        cartas: array[1.. TAM_BARALHO] of Tcarta
+    end;
+
 
 procedure embaralhar(var l: Tlista);
 var i, j, temp: integer;
 begin
-    for i:= TAMANHO_BARALHO downto 2 do
+    for i:= TAM_BARALHO downto 2 do
     begin
         j:= random(i) + 1;
         temp:= l[i];
