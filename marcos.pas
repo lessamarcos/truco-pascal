@@ -111,6 +111,9 @@ begin
     end;
 end;
 
+// Aqui é simples, o usuário ganha uma carta e o computador outra, até que suas mão estejam cheia, o inicio é atualizado a cada carta entregue, pq ela foi 
+// tecnicamente removida do baralho pra ser entregue
+
 procedure distribuirCartas(var f: Tfila; var mao1, mao2: Tmao);
 var i: integer;
 begin
@@ -123,11 +126,16 @@ begin
     end;
 end;
 
+// função simples só pra efetuar a vira do baralho e atualizar o inicio dele
+
 function virarManilha(var f: Tfila): Tcarta;
 begin
     virarManilha:= f.cartas[f.inicio];
     f.inicio:= f.inicio+1;
 end;
+
+// os valores da manilha tem alguns casos especiais, que precisam ser filtrados, se não tivesse esses casos era só fazer + 1 na vira, mas, não funciona assim, de inicio,
+// pensei em usar um vetor com as cartas, mas vi que não a necessidade, pq ha somente 2 casos especiais
 
 function valorManilha(var vira: Tcarta): integer;
 begin
@@ -139,7 +147,8 @@ begin
 end;
     
 
-
+// devido a força das manilhas ser superior e cada manilha precisar ter uma força diferente, já que manilha nunca empacha, é necessário atualizar as forças delas depois que 
+// as cartas são entregues, e cada naipe precisa ter uma força diferente
 
 procedure atualizaForcas(var mao: Tmao; vira: Tcarta);
 var i: integer;
