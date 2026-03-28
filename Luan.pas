@@ -181,16 +181,39 @@ begin
             2:write('Espada');
             3:write('Copas');
             4:write('Paus');
-        end;
+        end;git
 
         writeln;
     end;
 end;
 
-//Jogar a carta e decrementar da mao
-procedure JogarCarta(mao:Tmao);
-begin
+//Está funcão pede ao jogador qual carta deseja escolher para jogar (1 a 3).
+//O while serve para caso o jogador digitar uma posição invalida ele ter que escolher outra posição válida.
+//O laço FOR desloca a posição da direita para esqueda para reposicionar as cartas
+//Logo em seguida o programa limpa a ultima posição da mão.
+function JogarCarta(var mao:Tmao):Tcarta;
+var pos, i:integer;
+    cartaEscolhida:Tcarta;
+begin  
+    write('Escolha a carta para jogar (1 a ', TAM_MAO, '): ');
+    readln(pos);
 
+    while (pos < 1) or (pos > TAM_MAO) or (mao[pos].valor = 0) do
+    begin
+        write('Posicao invalida ou carta vazia! Escolha novamente: ');
+        readln(pos);
+    end;
+
+    cartaEscolhida:=mao[pos];
+
+    for i:=pos to TAM_MAO - 1 do    
+        mao[i]:=mao[i+1];
+    
+    mao[TAM_MAO].valor:= 0;
+    mao[TAM_MAO].naipe:= 0;
+    mao[TAM_MAO].forca:= 0;
+
+    jogarCarta:= cartaEscolhida;
 end;
 
 
