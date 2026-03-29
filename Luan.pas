@@ -159,7 +159,7 @@ begin
         begin
             case mao[i].naipe of
                 1: mao[i].forca:= 11;
-                1: mao[i].forca:= 12;
+                2: mao[i].forca:= 12;
                 3: mao[i].forca:= 13;
                 4: mao[i].forca:= 14;
             end;
