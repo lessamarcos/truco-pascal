@@ -175,13 +175,13 @@ var i:integer;
 begin   
     for i:=1 to TAM_MAO do
     begin   
-        write('Carta ', i, ': valor: ', mao[i].valor,' De ',);
+        write('Carta ', i, ': valor: ', mao[i].valor,' De ');
         case mao[i].naipe of 
             1:write('Ouro');
             2:write('Espada');
             3:write('Copas');
             4:write('Paus');
-        end;git
+        end;
 
         writeln;
     end;
