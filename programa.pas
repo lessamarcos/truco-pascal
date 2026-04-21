@@ -182,14 +182,22 @@ end;
 // Aqui as cartas ja foram distribuidas, e este procedimento mostra a "m√£o" do jogador.
 // o FOR percorre at√© "TAM_MAO" para verificar as 3 cartas, e logo em seguida imprime o valor, naipe e em que posi√ß√£o esta na m√£o do jogador;
 procedure ExibirMao(mao:Tmao);
-var i:integer;
-begin   
+var i, pos_y:integer;
+begin 
+	pos_y:= 5;  
     for i:=1 to TAM_MAO do
     begin   
-        if mao[i].valor <> 0 then
-            write('Carta ', i, ': ', mao[i].valor,' De ', nomeNaipe(mao[i].naipe));
-        writeln;
+      if mao[i].valor <> 0 then
+      begin
+      	textColor(1);
+      	textBackground(10);
+      	pos_y:= pos_y +1;
+      	goToXY(10, pos_y);
+        write('Carta ', i, ': ', mao[i].valor,' De ', nomeNaipe(mao[i].naipe));
+      end;
     end;
+    textColor(2);
+    textBackground(0);
 end;
 
 //Est√° func√£o pede ao jogador qual carta deseja escolher para jogar (1 a 3).
@@ -199,12 +207,15 @@ end;
 function JogarCarta(var mao:Tmao):Tcarta;
 var pos, i:integer;
     cartaEscolhida:Tcarta;
-begin  
+begin
+	goToXY(12,14);
+		textColor(14); 
     write('Escolha a carta para jogar (1 a ', TAM_MAO, '): ');
     readln(pos);
 
     while (pos < 1) or (pos > TAM_MAO) or (mao[pos].valor = 0) do
     begin
+    textColor(12);
         write('Posicao invalida ou carta vazia! Escolha novamente: ');
         readln(pos);
     end;
@@ -219,6 +230,7 @@ begin
     mao[TAM_MAO].forca:= 0;
 
     jogarCarta:= cartaEscolhida;
+    textColor(2);
 end;
 
 function compararCartas(carta1, carta2: Tcarta): integer;
@@ -250,7 +262,7 @@ begin
 end;
 
 procedure exibirCarta(c: tcarta);
-begin
+begin     
     write(c.valor, ' - ', nomeNaipe(c.naipe));
 end;
 
@@ -265,21 +277,21 @@ end;
 
 function pedirTruco(valorAtual: integer; mao2: Tmao): integer;
 begin
-    if valorAtual + 3 > 12 then
+    if valorAtual + 3 >= 11 then
     begin
-        writeln('N√£o √© poss√≠vel pedir truco.');
+        writeln('N‚o È possÌvel pedir truco.');
         pedirTruco:= valorAtual;
     end
     else
     begin
         if temCartaForte(mao2) then
         begin
-            writeln('CPU aceitou o truco! Mao vale ', valorAtual + 2, ' pontos.');
-            pedirTruco:= valorAtual + 2;
+            writeln('CPU aceitou o truco! Mao vale ', valorAtual * 3, ' pontos.');
+            pedirTruco:= valorAtual * 3;
         end
         else
         begin
-            writeln('CPU recusou o truco! Voc√™ ganha ', valorAtual, ' pontos. ');
+            writeln('CPU recusou o truco! VocÍ ganha ', valorAtual, ' pontos. ');
             pedirTruco:= valorAtual;
         end;
     end;
@@ -288,25 +300,42 @@ end;
 
 
 function jogarRodada(var mao1, mao2: Tmao; var valorMao: integer; var fugou: boolean):integer;
-var cartaJogador, cartaComputador: tcarta;
+var cartaJogador, cartaComputador,vira: tcarta;
     opcao: integer;
 begin
     writeln;
     ExibirMao(mao1);
-    writeln;
-    writeln('1 - Jogar');
-    writeln('2 - Pedir Truco');
-    writeln('3 - Correr');
+    textColor(3);
+    goToXY(73, 17);
+    writeln('=----------------------------------=');
+    goToXY(73, 18);
+    writeln('|           1 - Jogar              |');
+    goToXY(73, 19);
+    writeln('=----------------------------------=');
+    goToXY(73, 20);
+    writeln('|           2 - Pedir Truco        |');
+    goToXY(73, 21);
+    writeln('=----------------------------------=');
+    goToXY(73, 22);
+    writeln('|           3 - Correr             |');
+    goToXY(73, 23);
+    writeln('=----------------------------------=');
+    textColor(2);
+    goToXY(73, 24);
     readln(opcao);
     while (opcao < 1) or (opcao > 3) do
     begin
-        writeln('Op√ß√£o inv√°lida! Escolha 1, 2 ou 3.');
-        readln(opcao);
+    	goToXY(73, 25);
+    	textColor(12);
+      writeln('OpÁ„o inv·lida! Escolha 1, 2 ou 3.');
+      readln(opcao);
     end;
+    clrscr;
     case opcao of
         1: begin
             writeln;
             ExibirMao(mao1);
+            exibirCarta(vira);
             cartaJogador:= jogarCarta(mao1);
             cartaComputador:= jogadaComputador(mao2);
             write('Carta Jogador: ');
@@ -316,7 +345,7 @@ begin
             exibirCarta(cartaComputador);
             writeln;
             jogarRodada:= compararCartas(cartaJogador, cartaComputador);
-            readln;
+            readkey;
             clrscr;
         end;
         2: begin
@@ -325,13 +354,14 @@ begin
             cartaJogador:= jogarCarta(mao1);
             cartaComputador:= jogadaComputador(mao2);
             jogarRodada:= compararCartas(cartaJogador, cartaComputador);
-            readln;
+          	readkey;
             clrscr;
         end;
         3: begin
-            writeln('Tu correu, seu cag√£o!');
+            writeln('Tu correu, seu cag„o!');
             jogarRodada:= 2;
             fugou:= true;
+            clrscr; 
         end;
     end;
 end;
@@ -385,20 +415,44 @@ var lista: Tlista;
     pontosJogador, pontosComputador: integer;
     valorMao: integer;
     resultado: integer;
+    op: integer;
 
-begin
+Begin
     randomize;
     pontosJogador:= 0;
     pontosComputador:= 0;
-    repeat
-        inicializarBaralho(lista);
+    op:= 1;
+    while op <> 0 do
+    begin
+    textColor(15);
+    goToXY(63,18);
+    writeln('=-=-=-=-=-=-=-=-=-=-=-=-=-=');
+    goToXY(63,19);
+    writeln('| 1 -     INICIAR         |');
+    goToXY(63,20);
+    writeln('=-=-=-=-=-=-=-=-=-=-=-=-=-=');
+    goToXY(63,21);
+    writeln('| 0 -     SAIR            |');
+    goToXY(63,22);
+    writeln('=-=-=-=-=-=-=-=-=-=-=-=-=-=');
+    goToXY(63,23);
+    textColor(2);
+    readln(op);
+    clrscr;
+    case op of
+    1: begin
+        repeat
+    		inicializarBaralho(lista);
         embaralhar(lista);
         listaParaPilha(lista, pilha);
         cortarPilha(pilha, fila);
         distribuirCartas(fila, mao1, mao2);
         vira:= virarManilha(fila);
+        textColor(15);
+        goToXY(3,3);
         write('Manilha: ');
         exibirCarta(vira);
+        textColor(2);
         writeln;
         atualizaForcas(mao1, vira);
         atualizaForcas(mao2, vira);
@@ -408,10 +462,38 @@ begin
             pontosJogador:= pontosJogador + valorMao
         else if resultado = 2 then
             pontosComputador:= pontosComputador + valorMao;
-        writeln('Placar: Voc√™ ', pontosJogador, ' x ', pontosComputador, ' CPU');      
+        goToXY(63,2);
+        textColor(11);
+        writeln('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
+        goToXY(63,3);
+        writeln('|                          Placar                           |');
+        goToXY(63,4);
+        writeln('|                     VocÍ ', pontosJogador, ' x ', pontosComputador, ' CPU                        |');
+        goToXY(63,5);
+        writeln('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
+				textColor(2);     
     until (pontosJogador >= MAX_PONTOS) or (pontosComputador >= MAX_PONTOS);
     if pontosJogador >= MAX_PONTOS then
-        writeln('Voc√™ ganhou o jogo!')
+    begin
+    	goToXY(36,20);
+    	textColor(12);
+      writeln('============ VocÍ ganhou o jogo! ============');
+      readkey;
+      clrscr;
+    end
     else
-        writeln('CPU ganhou o jogo!');
+    begin
+    	goToXY(36,20);
+    	textColor(12);
+      writeln('============ CPU ganhou o jogo! ============');
+      readkey;
+      clrscr;
+    end;
+    end;
+    end;
+    end;
+
+		
+
+        
 End.
