@@ -35,5 +35,5 @@ classDiagram
     Baralho --> Carta
     Mao --> Carta
     Jogadores --> AcoesPadrao
-    Jogadores --> Mao
+    Jogadores --> Mao 
     Placar --> Jogadores
