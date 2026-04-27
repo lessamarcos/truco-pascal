@@ -264,27 +264,11 @@ begin
             temCartaForte:= true;
 end;
 
-// a função pedirTruco segue a progressão oficial: 1, 3, 6, 9, 12.
-// o parametro trucoPedidoPor impede que o jogador peça truco duas vezes na mesma mão.
-// se a CPU recusar, devolve o valor atual negativo para sinalizar encerramento da mão.
+// Permite apenas pedir truco 1 -> 3.
+// Bloqueia pedido duplicado via trucoPedidoPor e bloqueia se ja foi aceito (valorAtual >= 3).
+// Se a CPU recusar, retorna o valor atual negativo para sinalizar encerramento da mao.
 function pedirTruco(valorAtual: integer; mao2: Tmao; var trucoPedidoPor: integer): integer;
-var novoValor: integer;
 begin
-    if valorAtual = 1 then
-        novoValor:= 3
-    else if valorAtual = 3 then
-        novoValor:= 6
-    else if valorAtual = 6 then
-        novoValor:= 12
-    else
-    begin
-        textColor(12);
-        writeln('A mao ja vale 12! Nao e possivel pedir mais.');
-        textColor(2);
-        pedirTruco:= valorAtual;
-        exit;
-    end;
-
     if trucoPedidoPor = 1 then
     begin
         textColor(12);
@@ -293,30 +277,32 @@ begin
         pedirTruco:= valorAtual;
         exit;
     end;
-
+ 
+    if valorAtual >= 3 then
+    begin
+        textColor(12);
+        writeln('Truco ja foi pedido nesta mao!');
+        textColor(2);
+        pedirTruco:= valorAtual;
+        exit;
+    end;
+ 
     textColor(14);
-    if novoValor = 3 then
-        writeln('Voce pediu TRUCO!')
-    else if novoValor = 6 then
-        writeln('Voce pediu SEIS!')
-    else if novoValor = 9 then
-        writeln('Voce pediu NOVE!')
-    else
-        writeln('Voce pediu DOZE!');
+    writeln('Voce pediu TRUCO!');
     textColor(2);
-
+ 
     if temCartaForte(mao2) then
     begin
         textColor(10);
-        writeln('CPU aceitou! A mao agora vale ', novoValor, ' pontos.');
+        writeln('CPU aceitou! A mao agora vale 3 pontos.');
         textColor(2);
         trucoPedidoPor:= 1;
-        pedirTruco:= novoValor;
+        pedirTruco:= 3;
     end
     else
     begin
         textColor(12);
-        writeln('CPU recusou! Voce ganha ', valorAtual, ' ponto(s).');
+        writeln('CPU recusou! Voce ganha 1 ponto.');
         textColor(2);
         pedirTruco:= -(valorAtual);
     end;
