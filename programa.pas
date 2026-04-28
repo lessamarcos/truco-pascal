@@ -328,10 +328,8 @@ begin
     writeln;
     ExibirMao(mao1);
     textColor(3);
-    writeln;
     if quemComeca = 2 then
         writeln('--- A CPU JOGA PRIMEIRO ---');
-    writeln;
     writeln('1 - Jogar');
     writeln('2 - Pedir Truco');
     writeln('3 - Correr');
