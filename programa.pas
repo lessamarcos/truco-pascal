@@ -171,19 +171,17 @@ end;
 // o FOR percorre até "TAM_MAO" para verificar as 3 cartas, e logo em seguida imprime o valor, naipe e em que posição esta na mão do jogador.
 procedure ExibirMao(mao: Tmao);
 var i: integer;
-beg
+begin
     for i:= 1 to TAM_MAO do
     begin
         if mao[i].valor <> 0 then
         begin
-            textColor(1);
-            textBackground(10);
+            textColor(15);
             write('Carta ', i, ': ', mao[i].valor, ' De ', nomeNaipe(mao[i].naipe));
             writeln;
         end;
     end;
     textColor(2);
-    textBackground(0);
 end;
 
 // Está função pede ao jogador qual carta deseja escolher para jogar (1 a 3).
@@ -315,19 +313,21 @@ end;
 // se a CPU recusar o truco, jogarRodada encerra imediatamente devolvendo vitória ao jogador.
 function jogarRodada(var mao1, mao2: Tmao; var valorMao: integer;
 var fugou: boolean; vira: Tcarta;
-var trucoPedidoPor: integer): integer;
+var trucoPedidoPor: integer; var quemComeca: integer): integer;
 var cartaJogador, cartaComputador: Tcarta;
     opcao, resultado: integer;
 begin
     fugou:= false;
     resultado:= 0;
 
-    write('Manilha: ');
+    write('Vira: ');
     exibirCarta(vira);
     writeln;
     ExibirMao(mao1);
     textColor(3);
     writeln;
+    if quemComeca = 2 then
+        writeln('--- A CPU JOGA PRIMEIRO ---');
     writeln('1 - Jogar');
     writeln('2 - Pedir Truco');
     writeln('3 - Correr');
@@ -345,19 +345,34 @@ begin
 
     case opcao of
         1: begin
-            write('Manilha: ');
+            write('Vira: ');
             exibirCarta(vira);
             writeln;
             ExibirMao(mao1);
-            cartaJogador:= jogarCarta(mao1);
-            cartaComputador:= jogadaComputador(mao2);
-            write('Carta Jogador: ');
-            exibirCarta(cartaJogador);
-            writeln;
-            write('Carta CPU    : ');
-            exibirCarta(cartaComputador);
-            writeln;
+            
+            // Lógica de quem joga primeiro
+            if quemComeca = 1 then
+            begin
+                cartaJogador:= jogarCarta(mao1);
+                cartaComputador:= jogadaComputador(mao2);
+                write('Carta Jogador: '); exibirCarta(cartaJogador); writeln;
+                write('Carta CPU    : '); exibirCarta(cartaComputador); writeln;
+            end
+            else
+            begin
+                cartaComputador:= jogadaComputador(mao2);
+                write('A CPU jogou  : '); exibirCarta(cartaComputador); writeln;
+                writeln;
+                cartaJogador:= jogarCarta(mao1);
+                write('Sua Carta    : '); exibirCarta(cartaJogador); writeln;
+            end;
+
             resultado:= compararCartas(cartaJogador, cartaComputador);
+            
+            // Atualiza de quem é a vez para a próxima rodada (em caso de empate, mantém)
+            if resultado <> 0 then 
+                quemComeca:= resultado;
+
             textColor(11);
             if resultado = 1 then
                 writeln('Voce ganhou esta rodada!')
@@ -383,19 +398,31 @@ begin
             valorMao:= resultado;
             readkey;
             clrscr;
-            write('Manilha: ');
+            
+            write('Vira: ');
             exibirCarta(vira);
             writeln;
             ExibirMao(mao1);
-            cartaJogador:= jogarCarta(mao1);
-            cartaComputador:= jogadaComputador(mao2);
-            write('Carta Jogador: ');
-            exibirCarta(cartaJogador);
-            writeln;
-            write('Carta CPU    : ');
-            exibirCarta(cartaComputador);
-            writeln;
+            
+            // Lógica de quem joga primeiro repete aqui se o truco for aceito
+            if quemComeca = 1 then
+            begin
+                cartaJogador:= jogarCarta(mao1);
+                cartaComputador:= jogadaComputador(mao2);
+                write('Carta Jogador: '); exibirCarta(cartaJogador); writeln;
+                write('Carta CPU    : '); exibirCarta(cartaComputador); writeln;
+            end
+            else
+            begin
+                cartaComputador:= jogadaComputador(mao2);
+                write('A CPU jogou  : '); exibirCarta(cartaComputador); writeln;
+                writeln;
+                cartaJogador:= jogarCarta(mao1);
+                write('Sua Carta    : '); exibirCarta(cartaJogador); writeln;
+            end;
             resultado:= compararCartas(cartaJogador, cartaComputador);
+            if resultado <> 0 then 
+                quemComeca:= resultado;
             textColor(11);
             if resultado = 1 then
                 writeln('Voce ganhou esta rodada!')
@@ -428,19 +455,20 @@ end;
 function jogarMao(var mao1, mao2: Tmao; var valorMao: integer; vira: Tcarta): integer;
 var rodada1, rodada2, rodada3: integer;
     fugou: boolean;
-    trucoPedidoPor: integer;
+    trucoPedidoPor, quemComeca: integer;
 begin
     fugou:= false;
     trucoPedidoPor:= 0;
+    quemComeca:= 1; // O jogador começa a primeira rodada da mão
 
-    rodada1:= jogarRodada(mao1, mao2, valorMao, fugou, vira, trucoPedidoPor);
+    rodada1:= jogarRodada(mao1, mao2, valorMao, fugou, vira, trucoPedidoPor, quemComeca);
     if fugou then
     begin
         jogarMao:= 2;
         exit;
     end;
 
-    rodada2:= jogarRodada(mao1, mao2, valorMao, fugou, vira, trucoPedidoPor);
+    rodada2:= jogarRodada(mao1, mao2, valorMao, fugou, vira, trucoPedidoPor, quemComeca);
     if fugou then
     begin
         jogarMao:= 2;
@@ -461,7 +489,7 @@ begin
         jogarMao:= 2
     else
     begin
-        rodada3:= jogarRodada(mao1, mao2, valorMao, fugou, vira, trucoPedidoPor);
+        rodada3:= jogarRodada(mao1, mao2, valorMao, fugou, vira, trucoPedidoPor, quemComeca);
         if fugou then
             jogarMao:= 2
         else if rodada3 = 0 then
