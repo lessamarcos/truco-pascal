@@ -172,6 +172,7 @@ end;
 procedure ExibirMao(mao: Tmao);
 var i: integer;
 begin
+		writeln;
     for i:= 1 to TAM_MAO do
     begin
         if mao[i].valor <> 0 then
@@ -181,6 +182,7 @@ begin
             writeln;
         end;
     end;
+    writeln;
     textColor(2);
 end;
 
@@ -193,6 +195,7 @@ var pos, i: integer;
     cartaEscolhida: Tcarta;
 begin
     textColor(14);
+    writeln;
     write('Escolha a carta para jogar (1 a ', TAM_MAO, '): ');
     readln(pos);
 
@@ -328,11 +331,13 @@ begin
     writeln;
     if quemComeca = 2 then
         writeln('--- A CPU JOGA PRIMEIRO ---');
+    writeln;
     writeln('1 - Jogar');
     writeln('2 - Pedir Truco');
     writeln('3 - Correr');
     textColor(2);
     readln(opcao);
+    
 
     while (opcao < 1) or (opcao > 3) do
     begin
@@ -355,8 +360,10 @@ begin
             begin
                 cartaJogador:= jogarCarta(mao1);
                 cartaComputador:= jogadaComputador(mao2);
-                write('Carta Jogador: '); exibirCarta(cartaJogador); writeln;
+                writeln;
+                write('Carta Jogador: '); exibirCarta(cartaJogador); writeln; 
                 write('Carta CPU    : '); exibirCarta(cartaComputador); writeln;
+                writeln;
             end
             else
             begin
@@ -372,7 +379,8 @@ begin
             // Atualiza de quem é a vez para a próxima rodada (em caso de empate, mantém)
             if resultado <> 0 then 
                 quemComeca:= resultado;
-
+						
+						writeln;
             textColor(11);
             if resultado = 1 then
                 writeln('Voce ganhou esta rodada!')
