@@ -27,10 +27,10 @@ type
     Tmao = array [1..TAM_MAO] of Tcarta;
 
 
-// a ideia aqui é auto explicativo, inicializar o baralho, é simples basta percorrer todos os nipes juntamente com todas as cartas, 
-// percorre nipes e dentro de nipes o valor, pq cada número, deve ter 4 nipes. Aplica-se uma simples condicional pra filtrar se os
-// números são diferentes de 8 e 9, caso sejam, coloca no baralho. O procedimento também inicializa a força das cartas, atributo
-// que será usado para decidir qual carta irá ganhar.
+// a ideia aqui Ã© auto explicativo, inicializar o baralho, Ã© simples basta percorrer todos os nipes juntamente com todas as cartas, 
+// percorre nipes e dentro de nipes o valor, pq cada nÃºmero, deve ter 4 nipes. Aplica-se uma simples condicional pra filtrar se os
+// nÃºmeros sÃ£o diferentes de 8 e 9, caso sejam, coloca no baralho. O procedimento tambÃ©m inicializa a forÃ§a das cartas, atributo
+// que serÃ¡ usado para decidir qual carta irÃ¡ ganhar.
 procedure inicializarBaralho(var l: Tlista);
 var cartas, valor, naipe: integer;
 begin
@@ -59,9 +59,9 @@ begin
         end;
 end;
 
-// a lógica para embaralhar foi feita através do algoritmo fisher-yates, que pra mim é o padrão ouro, ele garante que todas as permutações
-// possíveis tem a mesma probabilidade de acontecer, então, é um embaralhamento uniforme. Funciona da seguinte forma: percorre-se o vetor de
-// trás pra frente, e em cada posição i, sortear um índice aleatório j, entre 1 e i, e trocar os elementos dessas duas posições
+// a lÃ³gica para embaralhar foi feita atravÃ©s do algoritmo fisher-yates, que pra mim Ã© o padrÃ£o ouro, ele garante que todas as permutaÃ§Ãµes
+// possÃ­veis tem a mesma probabilidade de acontecer, entÃ£o, Ã© um embaralhamento uniforme. Funciona da seguinte forma: percorre-se o vetor de
+// trÃ¡s pra frente, e em cada posiÃ§Ã£o i, sortear um Ã­ndice aleatÃ³rio j, entre 1 e i, e trocar os elementos dessas duas posiÃ§Ãµes
 procedure embaralhar(var l: Tlista);
 var i, j: integer;
     temp: Tcarta;
@@ -75,8 +75,8 @@ begin
     end;
 end;
 
-// Aqui de verdade, é a coisa mais simples do mundo, só jogar as coisas da lista pra pilha, na verdade, daria só pra ir colocando direto e definindo o topo 
-// pra 40 depois, mas, na minha opinião, perderia toda a ideia do que é uma pilha
+// Aqui de verdade, Ã© a coisa mais simples do mundo, sÃ³ jogar as coisas da lista pra pilha, na verdade, daria sÃ³ pra ir colocando direto e definindo o topo 
+// pra 40 depois, mas, na minha opiniÃ£o, perderia toda a ideia do que Ã© uma pilha
 procedure listaParaPilha(var l: Tlista; var p: Tpilha);
 var i: integer;
 begin
@@ -89,8 +89,8 @@ begin
 end;
 
 // transfere as cartas da pilha pra fila usando pop e enqueue. o pop retira sempre do topo da pilha (p.topo),
-// e o enqueue insere sempre no fim da fila (f.fim), respeitando o princípio FIFO. a cada iteração o topo
-// decrementa e o fim incrementa, até a pilha esvaziar completamente.
+// e o enqueue insere sempre no fim da fila (f.fim), respeitando o princÃ­pio FIFO. a cada iteraÃ§Ã£o o topo
+// decrementa e o fim incrementa, atÃ© a pilha esvaziar completamente.
 procedure cortarPilha(var p: Tpilha; var f: Tfila);
 var i: integer;
 begin
@@ -104,7 +104,7 @@ begin
     end;
 end;
 
-// Aqui é simples, o usuário ganha uma carta e o computador outra, até que suas mão estejam cheia, o inicio é atualizado a cada carta entregue, pq ela foi 
+// Aqui Ã© simples, o usuÃ¡rio ganha uma carta e o computador outra, atÃ© que suas mÃ£o estejam cheia, o inicio Ã© atualizado a cada carta entregue, pq ela foi 
 // tecnicamente removida do baralho pra ser entregue
 procedure distribuirCartas(var f: Tfila; var mao1, mao2: Tmao);
 var i: integer;
@@ -118,7 +118,7 @@ begin
     end;
 end;
 
-// função simples só pra efetuar a vira do baralho e atualizar o inicio dele
+// funÃ§Ã£o simples sÃ³ pra efetuar a vira do baralho e atualizar o inicio dele
 function virarManilha(var f: Tfila): Tcarta;
 begin
     virarManilha:= f.cartas[f.inicio];
@@ -126,8 +126,8 @@ begin
     writeln;
 end;
 
-// os valores da manilha tem alguns casos especiais, que precisam ser filtrados, se não tivesse esses casos era só fazer + 1 na vira, mas, não funciona assim, de inicio,
-// pensei em usar um vetor com as cartas, mas vi que não a necessidade, pq ha somente 2 casos especiais
+// os valores da manilha tem alguns casos especiais, que precisam ser filtrados, se nÃ£o tivesse esses casos era sÃ³ fazer + 1 na vira, mas, nÃ£o funciona assim, de inicio,
+// pensei em usar um vetor com as cartas, mas vi que nÃ£o a necessidade, pq ha somente 2 casos especiais
 function valorManilha(var vira: Tcarta): integer;
 begin
     case vira.valor of
@@ -137,8 +137,8 @@ begin
     end;
 end;
 
-// devido a força das manilhas ser superior e cada manilha precisar ter uma força diferente, já que manilha nunca empacha, é necessário atualizar as forças delas depois que 
-// as cartas são entregues, e cada naipe precisa ter uma força diferente
+// devido a forÃ§a das manilhas ser superior e cada manilha precisar ter uma forÃ§a diferente, jÃ¡ que manilha nunca empacha, Ã© necessÃ¡rio atualizar as forÃ§as delas depois que 
+// as cartas sÃ£o entregues, e cada naipe precisa ter uma forÃ§a diferente
 procedure atualizaForcas(var mao: Tmao; vira: Tcarta);
 var i: integer;
 begin
@@ -156,7 +156,7 @@ begin
     end;
 end;
 
-// converte o número do naipe para seu nome em texto, usado na exibição das cartas.
+// converte o nÃºmero do naipe para seu nome em texto, usado na exibiÃ§Ã£o das cartas.
 function nomeNaipe(naipe: integer): string;
 begin
     case naipe of
@@ -167,8 +167,8 @@ begin
     end;
 end;
 
-// Aqui as cartas ja foram distribuidas, e este procedimento mostra a "mão" do jogador.
-// o FOR percorre até "TAM_MAO" para verificar as 3 cartas, e logo em seguida imprime o valor, naipe e em que posição esta na mão do jogador.
+// Aqui as cartas ja foram distribuidas, e este procedimento mostra a "mÃ£o" do jogador.
+// o FOR percorre atÃ© "TAM_MAO" para verificar as 3 cartas, e logo em seguida imprime o valor, naipe e em que posiÃ§Ã£o esta na mÃ£o do jogador.
 procedure ExibirMao(mao: Tmao);
 var i: integer;
 begin
@@ -186,10 +186,10 @@ begin
     textColor(2);
 end;
 
-// Está função pede ao jogador qual carta deseja escolher para jogar (1 a 3).
-// O while serve para caso o jogador digitar uma posição invalida ele ter que escolher outra posição válida.
-// O laço FOR desloca a posição da direita para esquerda para reposicionar as cartas
-// Logo em seguida o programa limpa a ultima posição da mão.
+// EstÃ¡ funÃ§Ã£o pede ao jogador qual carta deseja escolher para jogar (1 a 3).
+// O while serve para caso o jogador digitar uma posiÃ§Ã£o invalida ele ter que escolher outra posiÃ§Ã£o vÃ¡lida.
+// O laÃ§o FOR desloca a posiÃ§Ã£o da direita para esquerda para reposicionar as cartas
+// Logo em seguida o programa limpa a ultima posiÃ§Ã£o da mÃ£o.
 function JogarCarta(var mao: Tmao): Tcarta;
 var pos, i: integer;
     cartaEscolhida: Tcarta;
@@ -219,7 +219,7 @@ begin
     textColor(2);
 end;
 
-// compara a força de duas cartas e retorna 1 se a primeira vence, 2 se a segunda vence, ou 0 em caso de empate.
+// compara a forÃ§a de duas cartas e retorna 1 se a primeira vence, 2 se a segunda vence, ou 0 em caso de empate.
 function compararCartas(carta1, carta2: Tcarta): integer;
 begin
     if carta1.forca > carta2.forca then
@@ -230,7 +230,7 @@ begin
         compararCartas:= 0;
 end;
 
-// define a jogada da CPU escolhendo sempre a carta de menor força da mão, removendo-a em seguida.
+// define a jogada da CPU escolhendo sempre a carta de menor forÃ§a da mÃ£o, removendo-a em seguida.
 function jogadaComputador(var mao: Tmao): Tcarta;
 var i, posMenor: integer;
 begin
@@ -255,7 +255,7 @@ begin
     write(c.valor, ' - ', nomeNaipe(c.naipe));
 end;
 
-// verifica se a mão possui pelo menos uma carta com força igual ou superior a 8, indicando carta forte ou manilha.
+// verifica se a mÃ£o possui pelo menos uma carta com forÃ§a igual ou superior a 8, indicando carta forte ou manilha.
 function temCartaForte(mao: Tmao): boolean;
 var i: integer;
 begin
@@ -268,63 +268,57 @@ end;
 // Permite apenas pedir truco 1 -> 3.
 // Bloqueia pedido duplicado via trucoPedidoPor e bloqueia se ja foi aceito (valorAtual >= 3).
 // Se a CPU recusar, retorna o valor atual negativo para sinalizar encerramento da mao.
-function pedirTruco(valorAtual: integer; mao2: Tmao; var trucoPedidoPor: integer): integer;
+function pedirTruco(valorAtual: integer; mao2: Tmao; var trucoPedidoPor: boolean): integer;
 begin
-    if trucoPedidoPor = 1 then
+    if trucoPedidoPor then
     begin
         textColor(12);
         writeln('Voce ja pediu truco nesta mao!');
         textColor(2);
         pedirTruco:= valorAtual;
-        exit;
-    end;
- 
-    if valorAtual >= 3 then
-    begin
-        textColor(12);
-        writeln('Truco ja foi pedido nesta mao!');
-        textColor(2);
-        pedirTruco:= valorAtual;
-        exit;
-    end;
- 
-    textColor(14);
-    writeln('Voce pediu TRUCO!');
-    textColor(2);
- 
-    if temCartaForte(mao2) then
-    begin
-        textColor(10);
-        writeln('CPU aceitou! A mao agora vale 3 pontos.');
-        textColor(2);
-        trucoPedidoPor:= 1;
-        pedirTruco:= 3;
     end
     else
     begin
-        textColor(12);
-        writeln('CPU recusou! Voce ganha 1 ponto.');
+        textColor(14);
+        writeln('Voce pediu TRUCO!');
         textColor(2);
-        pedirTruco:= -(valorAtual);
+        if temCartaForte(mao2) then
+        begin
+            textColor(10);
+            writeln('CPU aceitou! A mao agora vale 3 pontos. ');
+            textColor(2);
+            trucoPedidoPor:= true;
+            pedirTruco:= 3;
+        end
+        else
+        begin
+            textColor(12);
+            writeln('CPU recusou! Voce ganha 1 ponto.');
+            textColor(2);
+            pedirTruco:= (valorAtual);
+        end;
     end;
 end;
 
-// jogarRodada apresenta ao jogador as opções de jogar carta, pedir truco ou correr.
-// a vira é recebida por parametro para ser exibida corretamente a cada rodada.
-// trucoPedidoPor é compartilhado entre rodadas para impedir pedidos duplicados na mesma mão.
-// se o jogador correr, fugou é marcado como true e a mão encerra com vitória da CPU.
-// se a CPU recusar o truco, jogarRodada encerra imediatamente devolvendo vitória ao jogador.
+// jogarRodada apresenta ao jogador as opÃ§Ãµes de jogar carta, pedir truco ou correr.
+// a vira Ã© recebida por parametro para ser exibida corretamente a cada rodada.
+// trucoPedidoPor Ã© compartilhado entre rodadas para impedir pedidos duplicados na mesma mÃ£o.
+// se o jogador correr, fugou Ã© marcado como true e a mÃ£o encerra com vitÃ³ria da CPU.
+// se a CPU recusar o truco, jogarRodada encerra imediatamente devolvendo vitÃ³ria ao jogador.
 function jogarRodada(var mao1, mao2: Tmao; var valorMao: integer;
 var fugou: boolean; vira: Tcarta;
-var trucoPedidoPor: integer; var quemComeca: integer): integer;
+var trucoPedidoPor: boolean; var quemComeca: integer): integer;
 var cartaJogador, cartaComputador: Tcarta;
     opcao, resultado: integer;
 begin
     fugou:= false;
     resultado:= 0;
 
-    write('Vira: ');
+    write('Carta Virada: ');
     exibirCarta(vira);
+    writeln;
+    write('Manilha: ');
+    write(valorManilha(vira));
     writeln;
     ExibirMao(mao1);
     textColor(3);
@@ -349,11 +343,14 @@ begin
     case opcao of
         1: begin
             write('Vira: ');
+            writeln;
+            write('Manilha: ');
+            write(valorManilha(vira));
             exibirCarta(vira);
             writeln;
             ExibirMao(mao1);
             
-            // Lógica de quem joga primeiro
+            
             if quemComeca = 1 then
             begin
                 cartaJogador:= jogarCarta(mao1);
@@ -373,8 +370,7 @@ begin
             end;
 
             resultado:= compararCartas(cartaJogador, cartaComputador);
-            
-            // Atualiza de quem é a vez para a próxima rodada (em caso de empate, mantém)
+        
             if resultado <> 0 then 
                 quemComeca:= resultado;
 						
@@ -392,25 +388,18 @@ begin
             jogarRodada:= resultado;
         end;
         2: begin
-            resultado:= pedirTruco(valorMao, mao2, trucoPedidoPor);
-            if resultado < 0 then
-            begin
-                valorMao:= -resultado;
-                jogarRodada:= 1;
-                readkey;
-                clrscr;
-                exit;
-            end;
-            valorMao:= resultado;
+            valorMao:= pedirTruco(valorMao, mao2, trucoPedidoPor);''
             readkey;
             clrscr;
             
             write('Vira: ');
+            writeln;
+            write('Manilha: ');
+            write(valorManilha(vira));
             exibirCarta(vira);
             writeln;
             ExibirMao(mao1);
             
-            // Lógica de quem joga primeiro repete aqui se o truco for aceito
             if quemComeca = 1 then
             begin
                 cartaJogador:= jogarCarta(mao1);
@@ -453,33 +442,27 @@ begin
     end;
 end;
 
-// jogarMao controla as três rodadas de uma mão e aplica as regras de desempate do truco:
-// se o jogador ganhar as duas primeiras rodadas, vence a mão. se a CPU ganhar as duas, ela vence.
-// se empatar a primeira e alguém ganhar a segunda, vence quem ganhou a segunda.
-// se empatar as duas primeiras, a mão é empate. se cada um ganhar uma, decide na terceira.
-// se alguém ganhar a primeira e empatar a segunda, vence quem ganhou a primeira.
+// jogarMao controla as trÃªs rodadas de uma mÃ£o e aplica as regras de desempate do truco:
+// se o jogador ganhar as duas primeiras rodadas, vence a mÃ£o. se a CPU ganhar as duas, ela vence.
+// se empatar a primeira e alguÃ©m ganhar a segunda, vence quem ganhou a segunda.
+// se empatar as duas primeiras, a mÃ£o Ã© empate. se cada um ganhar uma, decide na terceira.
+// se alguÃ©m ganhar a primeira e empatar a segunda, vence quem ganhou a primeira.
 function jogarMao(var mao1, mao2: Tmao; var valorMao: integer; vira: Tcarta): integer;
 var rodada1, rodada2, rodada3: integer;
-    fugou: boolean;
-    trucoPedidoPor, quemComeca: integer;
+    fugou, trucoPedidoPor: boolean;
+    quemComeca: integer;
 begin
     fugou:= false;
-    trucoPedidoPor:= 0;
-    quemComeca:= 1; // O jogador começa a primeira rodada da mão
+    trucoPedidoPor:= false;
+    quemComeca:= 1; 
 
     rodada1:= jogarRodada(mao1, mao2, valorMao, fugou, vira, trucoPedidoPor, quemComeca);
-    if fugou then
-    begin
-        jogarMao:= 2;
-        exit;
-    end;
+    if not fugou then
+        rodada2:= jogarRodada(mao1, mao2, valormao, fugou, vira, trucoPedidoPor, quemComeca);
 
-    rodada2:= jogarRodada(mao1, mao2, valorMao, fugou, vira, trucoPedidoPor, quemComeca);
     if fugou then
-    begin
         jogarMao:= 2;
-        exit;
-    end;
+ 
 
     if (rodada1 = 1) and (rodada2 = 1) then
         jogarMao:= 1
