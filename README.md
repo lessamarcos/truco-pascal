@@ -55,4 +55,4 @@ Não é garantida compatibilidade com Free Pascal ou Turbo Pascal.
 
 ## 👥 Equipe
 
-Desenvolvido por **Marcos Gabriel Lessa**, **Luan Henrique Pinheiro** e **Carlos Miguel de Souza** — 3º semestre de BSI, UNIDAVI.
+Desenvolvido por **Marcos Gabriel Lessa**, **Luan Henrique Pinheiro** e **Carlos Miguel de Souza** — 3º semestre de SISTEMAS DE INFORMAÇÃO, UNIDAVI.
